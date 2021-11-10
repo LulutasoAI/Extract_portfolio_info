@@ -57,12 +57,40 @@ class Portfolio_to_Piechart():
        
         if to_show:
              #Pie chart generation process.
-            fig1, ax1 = plt.subplots()
-            ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
+            
+            plt.pie(sizes, labels=labels, autopct='%1.1f%%',
                     shadow=True, startangle=90)
-            ax1.axis('equal')
+            plt.axis('equal')
             plt.show()
+        
         return total
+
+    def process_for_chart(self,up_to_date_portfolio,to_show=True):
+        """
+        This function is for being called by another file, not for the internal use.
+        """
+        labels = []
+        sizes = []
+        raw_amounts = []
+        num_to_get_amount = 0
+        num_to_get_price = 1
+        total = 0
+        for stock_symbol in up_to_date_portfolio:
+            labels.append(stock_symbol)
+            current_info = up_to_date_portfolio[stock_symbol]
+            local_sum = current_info[num_to_get_amount] * current_info[num_to_get_price]
+            raw_amounts.append(local_sum)
+            total += local_sum
+        if total == np.sum(raw_amounts): #This might be redundant but checking is important init.
+            print("Variable check okay.")
+        else:
+            print(total,"vs",np.sum(raw_amounts))
+            print("Something is wrong.")
+        for amount in raw_amounts:
+            sizes.append(amount/total)
+
+        return sizes, labels 
+
 
     def portfolio_to_piechart(self,portfolio):
         up_to_date_portfolio = self.add_price_info_to_portfolio(portfolio)

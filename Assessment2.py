@@ -24,7 +24,7 @@ class Portfolio_Assessment():
         df = dt.DataReader(stock_symbol,"yahoo", start_date, end_date)
         return df.index,np.array(df["Close"])
 
-    def main(self):
+    def main(self,to_show=True):
         #date USD JPY rate 
         FX_info = self.JPY_X_rate_N_date(self.start, self.end)
 
@@ -52,11 +52,15 @@ class Portfolio_Assessment():
                 JPY = USD_total * temp
             X.append(date[0])
             Y.append(JPY)
-        plt.plot(X,Y)
-        plt.xlabel("Date")
-        plt.ylabel("JPY")
-        plt.title("Your Portfolio Performance")
-        plt.show()
+        if to_show:
+            plt.plot(X,Y)
+            plt.tight_layout()
+            plt.xlabel("Date")
+            plt.ylabel("JPY")
+            plt.title("Your Portfolio Performance")
+            plt.show()
+        else:
+            return X,Y
 if __name__ == "__main__":
     PA = Portfolio_Assessment()
     PA.main()
