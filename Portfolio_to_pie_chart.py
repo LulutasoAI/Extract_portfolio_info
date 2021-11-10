@@ -107,10 +107,11 @@ class Portfolio_to_Piechart():
         print("Your current total asset in Yen : {} JPY".format(int(total*USD_JPY_today)))
         return int(total*USD_JPY_today)
 
-
+    def main(self):
+        portfolio = portfolio_define.portfolio
+        info_, total= self.portfolio_to_piechart(portfolio)
+        JPY_amount_that_day = self.process_info_to_show(info_,total)
+        pickle_around.add_data([info_,total,JPY_amount_that_day])
 if __name__ == "__main__":
-    PP = Portfolio_to_Piechart()
-    portfolio = portfolio_define.portfolio
-    info_, total= PP.portfolio_to_piechart(portfolio)
-    JPY_amount_that_day = PP.process_info_to_show(info_,total)
-    pickle_around.add_data([info_,total,JPY_amount_that_day])
+    PP = Portfolio_to_Piechart().main()
+    
