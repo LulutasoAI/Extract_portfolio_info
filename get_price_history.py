@@ -10,7 +10,7 @@ class Get_history():
         self.date, self.date_yesterday,self.duration_oneday = self.get_date_variables()
         self.fixed_today = self.date
         print(type(self.date),"date type at init")
-        self.stock_search_to_prices = self.PP.stock_search_to_prices
+        self.stock_search_to_prices = self.PP.stock_search_to_prices #name, start, end
         pass 
     
     def main(self):
@@ -28,6 +28,8 @@ class Get_history():
             dummy, self.date = self.one_day_back(self.date)
         X,Y = self.process_info_to_x_y(result)
         self.plotter(X,Y)
+
+
 
     def plotter(self,X,Y):
         plt.plot(X,Y)

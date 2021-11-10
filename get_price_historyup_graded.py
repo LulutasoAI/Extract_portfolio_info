@@ -2,6 +2,10 @@ from Portfolio_to_pie_chart import Portfolio_to_Piechart
 import datetime
 import portfolio_define
 from matplotlib import pyplot as plt
+import pandas as pd
+import numpy as np
+import pandas_datareader as dt
+
 class Get_history():
     def __init__(self):
         self.portfolio = portfolio_define.portfolio
@@ -10,7 +14,7 @@ class Get_history():
         self.date, self.date_yesterday,self.duration_oneday = self.get_date_variables()
         self.fixed_today = self.date
         print(type(self.date),"date type at init")
-        self.stock_search_to_prices = self.PP.stock_search_to_prices
+        #self.stock_search_to_prices = self.PP.stock_search_to_prices
         pass 
     
     def main(self):
@@ -87,7 +91,25 @@ class Get_history():
         USD_JPY_today = round(self.stock_search_to_prices("JPY=X",start,end)[-1],2)
         return int(total*USD_JPY_today)
 
+    def stock_search_to_prices(self,stock_symbol,start_date, end_date):
+        df = dt.DataReader(stock_symbol,"yahoo", start_date, end_date)
+        #print(df)
+        prices = df["Close"]
+        return np.array(prices)
 
+    def JPY_X_rate_N_date(self,start_date, end_date):
+        FX_info = {}
+        JPYX_Rate = dt.DataReader("JPY=X","yahoo", start_date, end_date)
+        for i in range(len(JPYX_Rate)):
+            FX_info["{}".format(JPYX_Rate.index[i])] = JPYX_Rate["Close"][i]  
+        return FX_info
+
+    def stock_search_to_Date_Prices(self,stock_symbol,start_date, end_date):
+        df = dt.DataReader(stock_symbol,"yahoo", start_date, end_date)
+        
+        
+
+        return df.index,np.array(df["Close"])
 
 if __name__ == "__main__":
     get_history = Get_history()
