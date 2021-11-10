@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+<<<<<<< HEAD
 *.pyc
 *$py.class
 bin-debug/
@@ -8,6 +9,9 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 
+=======
+*$py.class
+>>>>>>> d73b283f2ac35bc59bb7afd9c5328ac3dc0ac748
 # Other files and folders
 .settings/
 
